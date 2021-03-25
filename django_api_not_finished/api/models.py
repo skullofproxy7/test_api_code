@@ -37,7 +37,7 @@ class Contact(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     registrationDate=models.DateTimeField(auto_now_add=True)
     locale=models.CharField(max_length=150)
-    persone=models.ForeignKey('Person')
+    persone=models.ForeignKey('Person',on_delete=models.CASCADE)
     organisation=models.ForeignKey('Organisation',on_delete=models.CASCADE)
 
 
@@ -54,10 +54,10 @@ class PersonForm(ModelForm):
 
 class OrganisationForm(ModelForm):
     class Meta:
-        model = Person
+        model = Organisation
         fields = ['name', 'address']
 
 class ContactForm(ModelForm):
     class Meta:
-        model = Person
+        model = Contact
         fields = ['persone', 'organisation']        
