@@ -3,8 +3,8 @@
 pip install django
 pip install djangorestframework
 
-python manage.py startproject some_project 
-python manage.py startapp api 
+django-admin startproject some_project 
+django-admin startapp api 
 ```
 
 Update settings.py:
