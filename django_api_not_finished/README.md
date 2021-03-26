@@ -4,6 +4,7 @@ pip install django
 pip install djangorestframework
 
 django-admin startproject some_project 
+cd some_project
 django-admin startapp api 
 ```
 
