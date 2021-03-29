@@ -25,7 +25,7 @@ class APITest(TestCase):
 				    "postcode": "TW9 1DN",
 				    "countryIsoCode": "GBR"
 					}
-			},
+				},
 			'organisation':{
 				"name": "Acme Ltd",
 				"address": {
