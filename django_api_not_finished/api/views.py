@@ -1,25 +1,35 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
-from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
-from api.serializers import *
 from api.models import *
 
+
+
 @api_view(["GET"])
-def Registrayion(request):
-    content=Contact.objects.get()#uuid
-    return JsonResponse(content)
+def RegistrayionRequest(request,registrationId):
+    try:
+        msg = Request(registrationId)
+        return JsonResponse(msg)
+    except:
+        pass
+    msg={
+        "error": {
+            "code": "InternalServerError",
+            "message": "Human friendly error message"
+        },
+        "fieldErrors": None
+        }
+    return JsonResponse(msg,status=404)
 
 @api_view(["POST"])
 def Registrayion(request):
-    track_uniq_id=request.META['HTTP_X_CORELATIONID']
-    f = ContactForm(request.data)
-    if f.is_valid():
-        sf = f.save()
-        content = {"registeredid": sf.id}
-        return JsonResponse(content)
-    else:
-        content = {"message": "error"}
-        return JsonResponse(content)
-    
+    try:
+        track_uniq_id=request.META['HTTP_X_CORELATIONID']
+    except:
+        pass
+    C_F = ContactForm(request.data)
+    if C_F.is_valid():
+        contact=C_F.save()
+        return JsonResponse({'registrationId':contact.id},status=201)      
+    return JsonResponse(C_F.errors,status=400)
+
