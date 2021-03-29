@@ -6,7 +6,7 @@ from django.urls import reverse
 client = Client()
 
 class APITest(TestCase):
-    """ Test correct work of POST GET"""
+	""" Test correct work of POST GET"""
     
 	def setUp(self):
 		self.valid_payload = {
@@ -40,74 +40,72 @@ class APITest(TestCase):
 					}
 				}
 			}
-        
-        self.invalid_payload = {
-		    'name': '',
-		    'email': 'project2@project.com',
-		    'score': 2,
-		}
+		
+		self.invalid_payload = {
+			    'name': '',
+			    'email': 'project2@project.com',
+			    'score': 2,
+			}
     
     
-    def test_POST_valid(self):
-        """Test POST valid data"""
-        print("url : ",reverse('Registration'))
-        response = client.post(
-            reverse('Registration'),
-            data=json.dumps(self.valid_payload),
-            content_type='application/json'
-        )
-        print(response.status_code)
-        print("response = ",response.json())
-        self.data_id=response.json()['registrationId']
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        
-    
-    def test_POST_invalid(self):
-        """Test POST invalid data"""
-        print("url : ",reverse('Registration'))
-        response = client.post(
-            reverse('Registration'),
-            data=json.dumps(self.invalid_payload),
-            content_type='application/json'
-        )
-        print("response code : ",response.status_code)
-        print("response = ",response.json())
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        
-    
-    def test_GET_invalid(self):
-        """Test GET invalid UUID"""
-        
-        response = client.post(
-            reverse('Registration'),
-            data=json.dumps(self.valid_payload),
-            content_type='application/json'
-        )
-        
-        data_id=response.json()['registrationId'].replace("1","2")
-        print("url : ",reverse('RegistrationRequest',args=[data_id]))
-        response = client.get(
-            reverse('RegistrationRequest',args=[data_id]),
-            content_type='application/json'
-        )
-        print("response code : ",response.status_code)
-        print("response = ",response.json())
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-        
+	def test_POST_valid(self):
+		"""Test POST valid data"""
+		print("url : ",reverse('Registration'))
+		response = client.post(
+		    reverse('Registration'),
+		    data=json.dumps(self.valid_payload),
+		    content_type='application/json'
+		)
+		print(response.status_code)
+		print("response = ",response.json())
+		self.data_id=response.json()['registrationId']
+		self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    def test_GET_valid(self):
-        """Test GET valid UUID"""
-        response = client.post(
-            reverse('Registration'),
-            data=json.dumps(self.valid_payload),
-            content_type='application/json'
-        )
-        data_id=response.json()['registrationId']
-        print("url : ",reverse('RegistrationRequest',args=[data_id]))
-        response = client.get(
-            reverse('RegistrationRequest',args=[data_id]),
-            content_type='application/json'
-        )
-        print("response code : ",response.status_code)
-        print("response = ",response.json())
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+	def test_POST_invalid(self):
+		"""Test POST invalid data"""
+		print("url : ",reverse('Registration'))
+		response = client.post(
+		    reverse('Registration'),
+		    data=json.dumps(self.invalid_payload),
+		    content_type='application/json'
+		)
+		print("response code : ",response.status_code)
+		print("response = ",response.json())
+		self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+	def test_GET_invalid(self):
+		"""Test GET invalid UUID"""
+		response = client.post(
+		    reverse('Registration'),
+		    data=json.dumps(self.valid_payload),
+		    content_type='application/json'
+		)
+		data_id=response.json()['registrationId'].replace("1","2")
+		print("url : ",reverse('RegistrationRequest',args=[data_id]))
+		response = client.get(
+		    reverse('RegistrationRequest',args=[data_id]),
+		    content_type='application/json'
+		)
+		print("response code : ",response.status_code)
+		print("response = ",response.json())
+		self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+	def test_GET_valid(self):
+		"""Test GET valid UUID"""
+		response = client.post(
+		    reverse('Registration'),
+		    data=json.dumps(self.valid_payload),
+		    content_type='application/json'
+		)
+		data_id=response.json()['registrationId']
+		print("url : ",reverse('RegistrationRequest',args=[data_id]))
+		response = client.get(
+		    reverse('RegistrationRequest',args=[data_id]),
+		    content_type='application/json'
+		)
+		print("response code : ",response.status_code)
+		print("response = ",response.json())
+		self.assertEqual(response.status_code, status.HTTP_200_OK)
