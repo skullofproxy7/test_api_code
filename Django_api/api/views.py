@@ -6,7 +6,7 @@ from api.models import *
 
 
 @api_view(["GET"])
-def RegistrayionRequest(request,registrationId):
+def RegistrationRequest(request,registrationId):
     try:
         msg = Request(registrationId)
         return JsonResponse(msg)
@@ -22,7 +22,7 @@ def RegistrayionRequest(request,registrationId):
     return JsonResponse(msg,status=404)
 
 @api_view(["POST"])
-def Registrayion(request):
+def Registration(request):
     try:
         track_uniq_id=request.META['HTTP_X_CORELATIONID']
     except:
