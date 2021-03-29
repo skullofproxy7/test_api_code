@@ -13,10 +13,10 @@ class APITest(TestCase):
         self.valid_payload = {
             'locale':'en',
             'persone':{
-				"firstName":"Joe",
-				"email":"test@test.test",
-				"lastName":"Bloggs",
-				"address":{
+		"firstName":"Joe",
+		"email":"test@test.test",
+		"lastName":"Bloggs",
+		"address":{
                     "locale": "en",
                     "addressLine1": "Gateway House",
                     "addressLine2": "28 The Quadrant",
@@ -25,22 +25,22 @@ class APITest(TestCase):
                     "state": "Surrey",
                     "postcode": "TW9 1DN",
                     "countryIsoCode": "GBR"
-				}
-			},
-            'organisation':{
-                "name": "Acme Ltd",
-                "address": {
-                    "locale": "en",
-                    "addressLine1": "Gateway House",
-                    "addressLine2": "28 The Quadrant",
-                    "addressLine3": "",
-                    "city": "Richmond",
-                    "state": "Surrey",
-                    "postcode": "TW9 1DN",
-                    "countryIsoCode": "GBR"
-                }
-            }
-		}
+			}
+		},
+		'organisation':{
+			"name": "Acme Ltd",
+			"address": {
+			    "locale": "en",
+			    "addressLine1": "Gateway House",
+			    "addressLine2": "28 The Quadrant",
+			    "addressLine3": "",
+			    "city": "Richmond",
+			    "state": "Surrey",
+			    "postcode": "TW9 1DN",
+			    "countryIsoCode": "GBR"
+			}
+            	}
+	}
         
         self.invalid_payload = {
             'name': '',
