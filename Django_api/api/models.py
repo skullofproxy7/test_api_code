@@ -1,7 +1,6 @@
 from django.db import models
 from django.forms import ModelForm,Field,Form,CharField,EmailField,JSONField,ValidationError
 from django.core.exceptions import ValidationError
-#from django import forms
 from django.contrib import messages
 import uuid
 
@@ -107,19 +106,22 @@ class ContactForm(Form):
     def clean(self):
         super(ContactForm, self).clean()
         data=self.cleaned_data
-        P_F=PersoneForm(data['persone'])
-        if P_F.is_valid():
-            pass
-        else:
-            if 'address' in P_F.errors:
-                self.add_error('persone', P_F.errors['address'])
-            self.add_error('persone', str(Error(P_F.errors)))
-        if data['organisation'] != None:
-            O_F=OrganisationForm(data['organisation'])
-            if O_F.is_valid():
+        if 'persone' in data:
+            P_F=PersoneForm(data['persone'])
+            if P_F.is_valid():
                 pass
             else:
-                self.add_error('organisation', str(Error(O_F.errors)))
+                if 'address' in P_F.errors:
+                    self.add_error('persone', P_F.errors['address'])
+                self.add_error('persone', str(Error(P_F.errors)))
+            if data['organisation'] != None:
+                O_F=OrganisationForm(data['organisation'])
+                if O_F.is_valid():
+                    pass
+                else:
+                    self.add_error('organisation', str(Error(O_F.errors)))
+        else:
+            self.add_error('persone', str(Error(['persone'])))
     
     def save(self):
         contact_record=Contact()
@@ -155,14 +157,11 @@ class PersoneForm(Form):
     def clean(self):
         super(PersoneForm, self).clean()
         data=self.cleaned_data
-        print(data)
         if data['address'] != None:
             A_F=AddressForm(data['address'])
             if A_F.is_valid():
                 pass
             else:
-                print("Fail")
-                print(str(Error(A_F.errors)))
                 self.add_error('address', str(Error(A_F.errors)))
 
     
